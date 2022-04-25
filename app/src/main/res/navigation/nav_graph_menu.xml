@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph2"
+    app:startDestination="@id/MenuFragment">
+
+    <fragment
+        android:id="@+id/MenuFragment"
+        android:name="com.example.friendsapp.activities.menu.ui.MenuFragment"
+        android:label="@string/menu_fragment_label"
+        tools:layout="@layout/fragment_menu">
+
+        <action
+            android:id="@+id/action_MenuFragment_to_AddFriendsFragment"
+            app:destination="@id/AddFriendsFragment" />
+
+        <action
+            android:id="@+id/action_MenuFragment_to_MyFriendsFragment"
+            app:destination="@id/MyFriendsFragment" />
+
+        <action
+            android:id="@+id/action_MenuFragment_to_HelpFragment"
+            app:destination="@id/HelpFragment" />
+
+        <action
+            android:id="@+id/action_MenuFragment_to_FriendReqsFragment"
+            app:destination="@id/FriendReqsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/AddFriendsFragment"
+        android:name="com.example.friendsapp.activities.menu.ui.AddFriendsFragment"
+        android:label="@string/addfriends_fragment_label"
+        tools:layout="@layout/fragment_addfriends">
+
+        <action
+            android:id="@+id/action_AddFriendsFragment_to_MenuFragment"
+            app:destination="@id/MenuFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MyFriendsFragment"
+        android:name="com.example.friendsapp.activities.menu.ui.MyFriendsFragment"
+        android:label="@string/myfriends_fragment_label"
+        tools:layout="@layout/fragment_addfriends">
+
+        <action
+            android:id="@+id/action_MyFriendsFragment_to_MenuFragment"
+            app:destination="@id/MenuFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/HelpFragment"
+        android:name="com.example.friendsapp.activities.menu.ui.HelpFragment"
+        android:label="@string/help_fragment_label"
+        tools:layout="@layout/fragment_help">
+
+        <action
+            android:id="@+id/action_HelpFragment_to_MenuFragment"
+            app:destination="@id/MenuFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FriendReqsFragment"
+        android:name="com.example.friendsapp.activities.menu.ui.FriendReqsFragment"
+        android:label="@string/friendreq_fragment_label"
+        tools:layout="@layout/fragment_friendreqs">
+
+        <action
+            android:id="@+id/action_FriendReqsFragment_to_MenuFragment"
+            app:destination="@id/MenuFragment" />
+    </fragment>
+</navigation>

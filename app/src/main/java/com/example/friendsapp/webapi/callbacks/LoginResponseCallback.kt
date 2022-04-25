@@ -1,9 +1,10 @@
-package com.example.friendsapp.webapi
+package com.example.friendsapp.webapi.callbacks
 
 import android.content.Intent
-import com.example.friendsapp.activities.login.LoginFragment
+import com.example.friendsapp.activities.login.ui.LoginFragment
 import com.example.friendsapp.activities.map.MapsActivityCurrentPlace
 import com.example.friendsapp.storage.username
+import com.example.friendsapp.webapi.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

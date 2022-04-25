@@ -3,8 +3,9 @@ package com.example.friendsapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.friendsapp.webapi.ApiInterface
 import com.example.friendsapp.activities.login.LoginActivity
+import com.example.friendsapp.webapi.ApiInterface
+import com.example.friendsapp.activities.menu.MenuActivity
 
 
 val apiInterface = ApiInterface.create()

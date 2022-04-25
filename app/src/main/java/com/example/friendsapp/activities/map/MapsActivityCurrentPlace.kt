@@ -16,9 +16,13 @@ package com.example.friendsapp.activities.map
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -32,6 +36,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.friendsapp.BuildConfig
 import com.example.friendsapp.R
+import com.example.friendsapp.activities.menu.MenuActivity
+import com.example.friendsapp.apiInterface
+import com.example.friendsapp.storage.username
+import com.example.friendsapp.webapi.LocationRequestBody
+import com.example.friendsapp.webapi.callbacks.FriendsLocationResponseCallback
+import com.example.friendsapp.webapi.callbacks.UpdateLocationResponseCallback
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -47,13 +57,17 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * An activity that displays a map showing the place at the device's current location.
  */
-class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
-    private var map: GoogleMap? = null
+class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback, LocationListener {
+    private lateinit var map: GoogleMap
     private var cameraPosition: CameraPosition? = null
+
+    // Initializing the location manager
+    private lateinit var locationManager: LocationManager
 
     // The entry point to the Places API.
     private lateinit var placesClient: PlacesClient
@@ -97,13 +111,24 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
+
+        // Connect button to layout file
+        val button = findViewById<FloatingActionButton>(R.id.button_menu)
+
+        // If button is pressed goto menu
+        button.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
+        }
+        // Contructing the location manager for updating the users location in the database later
+        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
     }
 
     /**
      * Saves the state of the map when the activity is paused.
      */
     override fun onSaveInstanceState(outState: Bundle) {
-        map?.let { map ->
+        map.let { map ->
             outState.putParcelable(KEY_CAMERA_POSITION, map.cameraPosition)
             outState.putParcelable(KEY_LOCATION, lastKnownLocation)
         }
@@ -136,12 +161,13 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
      * Manipulates the map when it's available.
      * This callback is triggered when the map is ready to be used.
      */
+    @SuppressLint("MissingPermission")
     override fun onMapReady(map: GoogleMap) {
         this.map = map
 
         // Use a custom info window adapter to handle multiple lines of text in the
         // info window contents.
-        this.map?.setInfoWindowAdapter(object : InfoWindowAdapter {
+        this.map.setInfoWindowAdapter(object : InfoWindowAdapter {
             // Return null here, so that getInfoContents() is called next.
             override fun getInfoWindow(arg0: Marker): View? {
                 return null
@@ -158,15 +184,18 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
                 return infoWindow
             }
         })
-
         // Prompt the user for permission.
         getLocationPermission()
+
+        // Updates location into the database on a timer of every 1 second
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1F, this)
 
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI()
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation()
+
     }
 
     /**
@@ -186,16 +215,16 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-                            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                                 LatLng(lastKnownLocation!!.latitude,
                                     lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
                         }
                     } else {
                         Log.d(TAG, "Current location is null. Using defaults.")
                         Log.e(TAG, "Exception: %s", task.exception)
-                        map?.moveCamera(CameraUpdateFactory
+                        map.moveCamera(CameraUpdateFactory
                             .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat()))
-                        map?.uiSettings?.isMyLocationButtonEnabled = false
+                        map.uiSettings.isMyLocationButtonEnabled = false
                     }
                 }
             }
@@ -250,9 +279,6 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
      */
     @SuppressLint("MissingPermission")
     private fun showCurrentPlace() {
-        if (map == null) {
-            return
-        }
         if (locationPermissionGranted) {
             // Use fields to define the data types to return.
             val placeFields = listOf(Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
@@ -302,7 +328,7 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
             Log.i(TAG, "The user did not grant location permission.")
 
             // Add a default marker, because the user hasn't selected a place.
-            map?.addMarker(MarkerOptions()
+            map.addMarker(MarkerOptions()
                 .title(getString(R.string.default_info_title))
                 .position(defaultLocation)
                 .snippet(getString(R.string.default_info_snippet)))
@@ -333,13 +359,13 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
 
             // Add a marker for the selected place, with an info window
             // showing information about that place.
-            map?.addMarker(MarkerOptions()
+            map.addMarker(MarkerOptions()
                 .title(likelyPlaceNames[which])
                 .position(markerLatLng)
                 .snippet(markerSnippet))
 
             // Position the map's camera at the location of the marker.
-            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(markerLatLng,
                 DEFAULT_ZOOM.toFloat()))
         }
 
@@ -355,16 +381,13 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
      */
     @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
-        if (map == null) {
-            return
-        }
         try {
             if (locationPermissionGranted) {
-                map?.isMyLocationEnabled = true
-                map?.uiSettings?.isMyLocationButtonEnabled = true
+                map.isMyLocationEnabled = true
+                map.uiSettings.isMyLocationButtonEnabled = true
             } else {
-                map?.isMyLocationEnabled = false
-                map?.uiSettings?.isMyLocationButtonEnabled = false
+                map.isMyLocationEnabled = false
+                map.uiSettings.isMyLocationButtonEnabled = false
                 lastKnownLocation = null
                 getLocationPermission()
             }
@@ -385,4 +408,13 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback {
         // Used for selecting the current place.
         private const val M_MAX_ENTRIES = 5
     }
+    // Updates users location in database and retrieves all of that users friends locations
+    override fun onLocationChanged(location: Location) {
+        val long = location.longitude
+        val lat = location.latitude
+        apiInterface.updateLocation(LocationRequestBody(username,long,lat)).enqueue(UpdateLocationResponseCallback(long,lat))
+        apiInterface.friendLocations(username).enqueue(FriendsLocationResponseCallback(map))
+    }
 }
+
+

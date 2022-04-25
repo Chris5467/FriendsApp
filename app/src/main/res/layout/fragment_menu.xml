@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.menu.ui.MenuFragment">
+
+    <Button
+        android:id="@+id/button_add_friends"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
+        android:text="Add Friends"
+        app:layout_constraintBottom_toTopOf="@+id/button_friendreqs"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_friendreqs"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
+        android:text="Friend Requests"
+        app:layout_constraintBottom_toTopOf="@+id/button_help"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_help"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="240dp"
+        android:text="Help"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_my_friends"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="24dp"
+        android:text="My Friends"
+        app:layout_constraintBottom_toTopOf="@+id/button_add_friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

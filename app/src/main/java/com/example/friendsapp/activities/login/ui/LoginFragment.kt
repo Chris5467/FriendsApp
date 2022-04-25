@@ -1,4 +1,4 @@
-package com.example.friendsapp.activities.login
+package com.example.friendsapp.activities.login.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.friendsapp.R
-import com.example.friendsapp.webapi.LoginResponseCallback
+import com.example.friendsapp.webapi.callbacks.LoginResponseCallback
 import com.example.friendsapp.apiInterface
 import com.example.friendsapp.databinding.FragmentLoginBinding
 import com.example.friendsapp.util.isValidPassword

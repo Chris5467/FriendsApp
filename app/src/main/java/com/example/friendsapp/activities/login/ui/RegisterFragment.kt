@@ -1,4 +1,4 @@
-package com.example.friendsapp.activities.login
+package com.example.friendsapp.activities.login.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.friendsapp.R
 import com.example.friendsapp.webapi.RegisterRequestBody
-import com.example.friendsapp.webapi.RegisterResponseCallback
+import com.example.friendsapp.webapi.callbacks.RegisterResponseCallback
 import com.example.friendsapp.apiInterface
 import com.example.friendsapp.databinding.FragmentRegisterBinding
 import com.example.friendsapp.util.isValidEmail

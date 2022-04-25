@@ -1,10 +1,9 @@
-package com.example.friendsapp.webapi
+package com.example.friendsapp.webapi.callbacks
 
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.friendsapp.R
-import com.example.friendsapp.activities.login.LoginFragment
-import com.example.friendsapp.activities.login.RegisterFragment
+import com.example.friendsapp.activities.login.ui.RegisterFragment
+import com.example.friendsapp.webapi.RegisterResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
