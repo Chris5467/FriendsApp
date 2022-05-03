@@ -35,9 +35,9 @@ class FriendReqsResponseCallback(private val fragment : FriendReqsFragment, priv
 
     private fun generateRequestText(friendRequest: String) : TextView {
         val text = TextView(fragment.context)
-        text.text = friendRequest
+        text.text = friendRequest + "   "
         text.setTextColor(Color.BLACK)
-        text.textSize = 32F
+        text.textSize = 20F
         return text
     }
 

@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".activities.menu.ui.MenuFragment">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        android:src="@drawable/logout"
+        app:backgroundTint="#F44336"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="196dp"
+        android:layout_height="158dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="29dp"
+        android:src="@drawable/friends_icon"
+        app:layout_constraintBottom_toTopOf="@+id/button_my_friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
     <Button
         android:id="@+id/button_add_friends"
         android:layout_width="180dp"
@@ -31,7 +57,7 @@
         android:id="@+id/button_help"
         android:layout_width="180dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="240dp"
+        android:layout_marginBottom="108dp"
         android:text="Help"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +71,18 @@
         android:layout_marginBottom="24dp"
         android:text="My Friends"
         app:layout_constraintBottom_toTopOf="@+id/button_add_friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="188dp"
+        android:fontFamily="cursive"
+        android:text="Menu"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toTopOf="@+id/button_my_friends"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

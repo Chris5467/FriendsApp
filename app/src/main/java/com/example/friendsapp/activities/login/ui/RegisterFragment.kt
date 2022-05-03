@@ -57,6 +57,9 @@ class RegisterFragment : Fragment() {
                 println("Invalid data")
             }
         }
+        binding.buttonReturn5.setOnClickListener {
+            findNavController().navigate(R.id.action_RegisterFragment_to_LoginFragment)
+        }
     }
 
     override fun onDestroyView() {

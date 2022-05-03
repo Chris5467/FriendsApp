@@ -415,6 +415,16 @@ class MapsActivityCurrentPlace : AppCompatActivity(), OnMapReadyCallback, Locati
         apiInterface.updateLocation(LocationRequestBody(username,long,lat)).enqueue(UpdateLocationResponseCallback(long,lat))
         apiInterface.friendLocations(username).enqueue(FriendsLocationResponseCallback(map))
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
+    }
+
+    override fun onProviderDisabled(provider: String) {
+    }
+
+    override fun onProviderEnabled(provider: String) {
+    }
 }
 
 

@@ -6,25 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".activities.login.ui.RegisterFragment">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="196dp"
+        android:layout_height="158dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/friends_icon"
+        app:layout_constraintBottom_toTopOf="@+id/register_input_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_title2" />
+
     <TextView
         android:id="@+id/login_title2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="45dp"
-        android:fontFamily="casual"
+        android:layout_marginBottom="196dp"
+        android:fontFamily="cursive"
         android:text="Find my friends"
         android:textAlignment="center"
-        android:textSize="40sp"
+        android:textSize="48sp"
         app:layout_constraintBottom_toTopOf="@+id/register_input_email"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/register_button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="212dp"
+        android:layout_marginBottom="116dp"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,13 +75,24 @@
         android:id="@+id/register_input_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="32dp"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/register_button_login"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_return5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Return"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_button_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

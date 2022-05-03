@@ -23,7 +23,7 @@ class FriendsLocationResponseCallback(private val map: GoogleMap) : Callback<Fri
                         MarkerOptions()
                             .title(it.username)
                             .position(LatLng(it.lat.toDouble(), it.long.toDouble()))
-                            .snippet("${it.username} is here!"))
+                            .snippet("${it.username}'s last known location!"))
 
                 }
             }

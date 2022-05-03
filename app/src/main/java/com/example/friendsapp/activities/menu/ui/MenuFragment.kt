@@ -1,5 +1,6 @@
 package com.example.friendsapp.activities.menu.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.friendsapp.R
+import com.example.friendsapp.activities.login.LoginActivity
+import com.example.friendsapp.activities.map.MapsActivityCurrentPlace
 import com.example.friendsapp.databinding.FragmentMenuBinding
 
 /**
@@ -47,6 +50,10 @@ class MenuFragment : Fragment() {
 
         binding.buttonHelp.setOnClickListener {
             findNavController().navigate(R.id.action_MenuFragment_to_HelpFragment)
+        }
+        binding.buttonLogout.setOnClickListener {
+            val intent = Intent(this.context, LoginActivity::class.java)
+            this.startActivity(intent)
         }
     }
 

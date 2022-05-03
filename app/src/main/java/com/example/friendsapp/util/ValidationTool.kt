@@ -16,7 +16,7 @@ fun isValidUsername(username: String): Boolean {
         false
     } else {
         val usernameREGEX = Pattern.compile(
-            "^(?=[a-zA-Z0-9._]{8,20}\$)(?!.*[_.]{2})[^_.].*[^_.]\$"
+            "^(?=[a-zA-Z0-9._]{3,20}\$)(?!.*[_.]{2})[^_.].*[^_.]\$"
         )
         return usernameREGEX.matcher(username).matches()
     }
